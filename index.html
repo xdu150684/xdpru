@@ -13,7 +13,19 @@
             <input type="file" id="fileInput" name="fileInput" accept=".m3u8" required>
             <button type="submit">Verificar Enlaces</button>
         </form>
-        <div id="results"></div>
+
+        <div class="results">
+            <div id="validLinks">
+                <h2>Enlaces Válidos</h2>
+                <div id="validLinksList"></div>
+                <button id="downloadValidLinks">Descargar Válidos</button>
+            </div>
+            <div id="invalidLinks">
+                <h2>Enlaces Inválidos</h2>
+                <div id="invalidLinksList"></div>
+                <button id="downloadInvalidLinks">Descargar Inválidos</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
