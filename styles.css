@@ -1,4 +1,16 @@
 /* Estilos adicionales para los resultados */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 .results {
     display: flex;
     justify-content: space-around;
@@ -9,9 +21,9 @@
     flex: 1;
     margin: 0 10px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #333;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #1e1e1e;
 }
 
 .results h2 {
@@ -21,6 +33,9 @@
 #validLinksList, #invalidLinksList {
     max-height: 400px;
     overflow-y: auto;
+    background-color: #2e2e2e;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 button {
@@ -34,4 +49,8 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+input[type="file"] {
+    color: #fff;
 }
