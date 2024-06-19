@@ -14,8 +14,8 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
         var content = e.target.result;
         var lines = content.split('\n');
 
-        var resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = '';
+        var validLinks = [];
+        var invalidLinks = [];
 
         lines.forEach(function(line) {
             line = line.trim();
@@ -24,28 +24,56 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
             }
             if (line) {
                 var link = line.split('#')[0].trim();
-                var linkDiv = document.createElement('div');
-                linkDiv.textContent = link;
-
                 var request = new XMLHttpRequest();
                 request.open('HEAD', link, true);
                 request.onload = function() {
                     if (request.status === 200) {
-                        linkDiv.textContent += ' - Válido';
-                        linkDiv.style.color = 'green';
+                        validLinks.push(link);
+                        mostrarEnlace(link, true);
                     } else {
-                        linkDiv.textContent += ` - Inválido (Código de Estado: ${request.status})`;
-                        linkDiv.style.color = 'red';
+                        invalidLinks.push(link);
+                        mostrarEnlace(link, false);
                     }
                 };
                 request.onerror = function() {
-                    linkDiv.textContent += ' - Error al conectar';
-                    linkDiv.style.color = 'orange';
+                    invalidLinks.push(link);
+                    mostrarEnlace(link, false);
                 };
                 request.send();
-
-                resultsDiv.appendChild(linkDiv);
             }
+        });
+
+        // Función para mostrar el enlace en la lista correspondiente
+        function mostrarEnlace(link, esValido) {
+            var lista = esValido ? document.getElementById('validLinksList') : document.getElementById('invalidLinksList');
+            var linkDiv = document.createElement('div');
+            linkDiv.textContent = link;
+            lista.appendChild(linkDiv);
+        }
+
+        // Función para descargar los enlaces válidos o inválidos
+        function descargarEnlaces(enlaces, nombreArchivo) {
+            var blob = new Blob([enlaces.join('\n')], { type: 'text/plain' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = nombreArchivo;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }, 0);
+        }
+
+        // Evento para descargar enlaces válidos
+        document.getElementById('downloadValidLinks').addEventListener('click', function() {
+            descargarEnlaces(validLinks, 'enlaces_validos.txt');
+        });
+
+        // Evento para descargar enlaces inválidos
+        document.getElementById('downloadInvalidLinks').addEventListener('click', function() {
+            descargarEnlaces(invalidLinks, 'enlaces_invalidos.txt');
         });
     };
 
