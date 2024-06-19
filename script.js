@@ -39,6 +39,9 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
                 }
             }
         }
+
+        // Mostrar pop-up de finalización
+        alert('Verificación de enlaces finalizada.');
     };
 
     reader.readAsText(file);
@@ -51,9 +54,10 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
         lista.appendChild(linkDiv);
     }
 
-    // Función para descargar los enlaces válidos o inválidos
+    // Función para descargar los enlaces válidos o inválidos en formato m3u8
     function descargarEnlaces(enlaces, nombreArchivo) {
-        var blob = new Blob([enlaces.join('\n')], { type: 'text/plain' });
+        var contenido = '#EXTM3U\n' + enlaces.map(link => '#EXTINF:-1,\n' + link).join('\n');
+        var blob = new Blob([contenido], { type: 'text/plain' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
@@ -68,11 +72,11 @@ document.getElementById('uploadForm').addEventListener('submit', function(e) {
 
     // Evento para descargar enlaces válidos
     document.getElementById('downloadValidLinks').addEventListener('click', function() {
-        descargarEnlaces(validLinks, 'enlaces_validos.txt');
+        descargarEnlaces(validLinks, 'enlaces_validos.m3u8');
     });
 
     // Evento para descargar enlaces inválidos
     document.getElementById('downloadInvalidLinks').addEventListener('click', function() {
-        descargarEnlaces(invalidLinks, 'enlaces_invalidos.txt');
+        descargarEnlaces(invalidLinks, 'enlaces_invalidos.m3u8');
     });
 });
