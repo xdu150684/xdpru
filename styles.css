@@ -3,27 +3,35 @@ body {
     background-color: #121212;
     color: #ffffff;
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .container {
+    width: 100%;
     max-width: 800px;
-    margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .results {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 20px;
 }
 
 .results > div {
-    flex: 1;
-    margin: 0 10px;
+    flex: 1 1 45%; /* Ajustar tamaño de los divs */
+    margin: 0 10px 20px; /* Espacio en los márgenes */
     padding: 10px;
     border: 1px solid #333;
     border-radius: 5px;
     background-color: #1e1e1e;
+    overflow: hidden; /* Ocultar overflow para los enlaces largos */
 }
 
 .results h2 {
